@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { AssessmentSection, TraitCategory, AssessmentResult, CareerSuggestion } from "@/types/assessment";
-import { assessmentSections, calculateCareerMatches, getTopTraits } from "@/data/assessmentData";
+import { assessmentSections, calculateCareerMatches, getTopTraits, getTotalCareerCount } from "@/data/assessmentData";
 
 type AssessmentContextType = {
   currentSectionIndex: number;
@@ -15,6 +15,7 @@ type AssessmentContextType = {
   calculateResults: () => AssessmentResult;
   getCareerMatches: () => CareerSuggestion[];
   getTopTraits: () => TraitCategory[];
+  getTotalCareerCount: () => number;
   getCurrentQuestion: () => { question: string; id: string } | null;
   getCurrentSection: () => AssessmentSection | null;
   getSectionProgress: () => number;
@@ -211,6 +212,10 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     return getTopTraits(results, 3);
   };
 
+  const getTotalCareerCountImpl = () => {
+    return getTotalCareerCount();
+  };
+
   const context: AssessmentContextType = {
     currentSectionIndex,
     currentQuestionIndex,
@@ -224,6 +229,7 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     calculateResults,
     getCareerMatches,
     getTopTraits: getTopTraitsImpl,
+    getTotalCareerCount: getTotalCareerCountImpl,
     getCurrentQuestion,
     getCurrentSection,
     getSectionProgress,

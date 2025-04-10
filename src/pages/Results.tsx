@@ -19,11 +19,12 @@ import {
   LightbulbIcon,
   DollarSign,
   GraduationCap,
-  ListChecks
+  ListChecks,
+  Info
 } from "lucide-react";
 
 const Results = () => {
-  const { calculateResults, getCareerMatches, getTopTraits, goToStart } = useAssessment();
+  const { calculateResults, getCareerMatches, getTopTraits, getTotalCareerCount, goToStart } = useAssessment();
   const [activeTab, setActiveTab] = useState("traits");
   
   // Persist results in localStorage to handle page refreshes
@@ -40,6 +41,7 @@ const Results = () => {
   const results = calculateResults();
   const careerMatches = getCareerMatches();
   const topTraits = getTopTraits();
+  const totalCareers = getTotalCareerCount();
 
   return (
     <AssessmentLayout>
@@ -114,6 +116,13 @@ const Results = () => {
           </TabsContent>
           
           <TabsContent value="careers" className="space-y-6">
+            <div className="bg-gray-50 p-4 rounded-xl mb-4 flex items-center gap-2">
+              <Info className="h-5 w-5 text-blue-500" />
+              <p className="text-sm text-gray-700">
+                Showing your top {careerMatches.slice(0, 10).length} matches from our database of {totalCareers} future-ready careers
+              </p>
+            </div>
+            
             <div className="space-y-4">
               {careerMatches.slice(0, 10).map((career, index) => (
                 <Collapsible key={career.title} className="border border-gray-200 rounded-xl">

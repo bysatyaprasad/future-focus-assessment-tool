@@ -1,4 +1,3 @@
-
 import { AssessmentSection, Question, TraitCategory, CareerSuggestion } from "@/types/assessment";
 
 // Personality Assessment Questions
@@ -591,11 +590,23 @@ export const getTopTraits = (results: Record<TraitCategory, number>, count: numb
 };
 
 export const calculateCareerMatches = (results: Record<TraitCategory, number>): CareerSuggestion[] => {
+  const normalizedResults = { ...results };
+  const maxPossibleScore = 5; // Max score on our 1-5 scale
+  
   const calculatedSuggestions = careerSuggestions.map(suggestion => {
-    // Calculate how well the user's traits match this career
-    let score = suggestion.traits.reduce((total, trait) => {
-      return total + (results[trait] || 0);
-    }, 0) / suggestion.traits.length;
+    let traitMatchSum = 0;
+    let relevantTraitCount = 0;
+    
+    suggestion.traits.forEach(trait => {
+      if (normalizedResults[trait]) {
+        traitMatchSum += normalizedResults[trait];
+        relevantTraitCount++;
+      }
+    });
+    
+    const score = relevantTraitCount > 0 
+      ? traitMatchSum / (relevantTraitCount * maxPossibleScore) 
+      : 0;
     
     return {
       ...suggestion,
@@ -603,6 +614,13 @@ export const calculateCareerMatches = (results: Record<TraitCategory, number>): 
     };
   });
   
-  // Sort by score, highest first
   return calculatedSuggestions.sort((a, b) => b.score - a.score);
+};
+
+export const getAllCareerSuggestions = (): CareerSuggestion[] => {
+  return careerSuggestions;
+};
+
+export const getTotalCareerCount = (): number => {
+  return careerSuggestions.length;
 };
