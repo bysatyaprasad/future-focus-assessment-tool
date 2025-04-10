@@ -1,4 +1,5 @@
-import { AssessmentSection, Question, TraitCategory, CareerSuggestion } from "@/types/assessment";
+
+import { AssessmentSection, Question, TraitCategory, CareerSuggestion, AssessmentResult } from "@/types/assessment";
 
 // Personality Assessment Questions
 const personalityQuestions: Question[] = [
@@ -168,6 +169,7 @@ export const assessmentSections: AssessmentSection[] = [
   },
 ];
 
+// Expanded list of high-income, future-ready careers
 export const careerSuggestions: CareerSuggestion[] = [
   {
     title: "Data Scientist",
@@ -218,12 +220,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     salary: "₹12-40 lakhs per year"
   },
   {
-    title: "Healthcare & Medicine",
-    description: "Roles focused on helping others through medical care, treatment, and support.",
-    traits: ["Helpful", "WorkHabits", "TeamSpirit"],
-    score: 0
-  },
-  {
     title: "Digital Healthcare Specialist",
     description: "Implement and manage digital health technologies and telemedicine systems.",
     traits: ["TechAptitude", "Helpful", "Adaptability"],
@@ -272,12 +268,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     salary: "₹8-40 lakhs per year"
   },
   {
-    title: "Arts & Design",
-    description: "Creative careers in visual arts, performing arts, design, or content creation.",
-    traits: ["Creative", "MindStyles", "ExpressionStyle"],
-    score: 0
-  },
-  {
     title: "Digital Content Creator",
     description: "Create engaging content for social media, websites, and other digital platforms.",
     traits: ["Creative", "ExpressionStyle", "Adaptability"],
@@ -308,12 +298,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     education: "Marketing degree or specialized digital marketing certifications",
     outlook: "Essential role in virtually all businesses",
     salary: "₹4-25 lakhs per year"
-  },
-  {
-    title: "Business & Leadership",
-    description: "Careers in management, entrepreneurship, sales, or business operations.",
-    traits: ["Leadership", "TeamSpirit", "ExpressionStyle"],
-    score: 0
   },
   {
     title: "Product Manager",
@@ -348,12 +332,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     salary: "₹8-35 lakhs per year"
   },
   {
-    title: "Education & Teaching",
-    description: "Jobs focused on teaching, training, and helping others learn and grow.",
-    traits: ["Helpful", "MindStyles", "TeamSpirit"],
-    score: 0
-  },
-  {
     title: "EdTech Specialist",
     description: "Develop and implement technology solutions for educational purposes.",
     traits: ["TechAptitude", "Helpful", "Innovation"],
@@ -368,12 +346,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     education: "Education background with tech skills or tech background with teaching interest",
     outlook: "Growing field as education continues to digitize",
     salary: "₹5-20 lakhs per year"
-  },
-  {
-    title: "Science & Research",
-    description: "Careers involving investigation, analysis, and discovering how things work.",
-    traits: ["Analytical", "MindStyles", "WorkHabits"],
-    score: 0
   },
   {
     title: "Biotechnology Researcher",
@@ -408,12 +380,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     salary: "₹5-15 lakhs per year"
   },
   {
-    title: "Building & Engineering",
-    description: "Hands-on work creating, fixing, or improving physical structures and systems.",
-    traits: ["HandsOn", "WorkHabits", "Analytical"],
-    score: 0
-  },
-  {
     title: "Renewable Energy Engineer",
     description: "Design and develop systems that generate clean, sustainable energy.",
     traits: ["HandsOn", "Innovation", "TechAptitude"],
@@ -444,12 +410,6 @@ export const careerSuggestions: CareerSuggestion[] = [
     education: "Engineering degree with robotics focus or specialized certifications",
     outlook: "Growing field with applications across industries",
     salary: "₹7-35 lakhs per year"
-  },
-  {
-    title: "Organization & Administration",
-    description: "Roles that involve organizing, planning, and maintaining systems and processes.",
-    traits: ["Organized", "WorkHabits", "TeamSpirit"],
-    score: 0
   },
   {
     title: "Project Manager",
@@ -530,6 +490,182 @@ export const careerSuggestions: CareerSuggestion[] = [
     education: "Computer science or design background with AR/VR focus",
     outlook: "Growing field with expanded applications across industries",
     salary: "₹8-25 lakhs per year"
+  },
+  {
+    title: "Quantum Computing Researcher",
+    description: "Develop quantum algorithms and applications that solve complex computational problems beyond classical computing capabilities.",
+    traits: ["Analytical", "TechAptitude", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Study quantum mechanics and linear algebra",
+      "Learn quantum programming languages like Qiskit or Cirq",
+      "Practice with quantum simulators",
+      "Follow quantum computing research publications"
+    ],
+    skills: ["Quantum algorithms", "Mathematical modeling", "Programming", "Research methodology"],
+    education: "Advanced degree in physics, computer science, or mathematics",
+    outlook: "Emerging field with transformative potential across industries",
+    salary: "₹10-50 lakhs per year"
+  },
+  {
+    title: "Biomedical Engineer",
+    description: "Design and develop medical equipment, devices, and software to improve healthcare delivery and patient outcomes.",
+    traits: ["HandsOn", "Innovation", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Study biology and engineering fundamentals",
+      "Learn medical device regulations and standards",
+      "Practice with design and simulation software",
+      "Understand clinical workflows and healthcare systems"
+    ],
+    skills: ["Medical device design", "Biomechanics", "Clinical validation", "Regulatory compliance"],
+    education: "Degree in biomedical engineering or related field",
+    outlook: "Growing with healthcare innovation and aging population",
+    salary: "₹7-30 lakhs per year"
+  },
+  {
+    title: "Fintech Product Developer",
+    description: "Build innovative financial technology products and services that transform banking, payments, and investments.",
+    traits: ["TechAptitude", "Innovation", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Understand financial systems and regulations",
+      "Learn secure application development",
+      "Study payment processing systems and APIs",
+      "Keep updated on emerging fintech trends"
+    ],
+    skills: ["Financial knowledge", "Security", "API integration", "User experience design"],
+    education: "Computer science or finance background with interdisciplinary knowledge",
+    outlook: "Rapidly growing sector disrupting traditional finance",
+    salary: "₹10-40 lakhs per year"
+  },
+  {
+    title: "Legal Technology Specialist",
+    description: "Implement and manage technology solutions for legal practices, improving efficiency and access to legal services.",
+    traits: ["TechAptitude", "Organized", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Learn about legal processes and workflows",
+      "Understand legal document management systems",
+      "Study legal data analytics and AI applications",
+      "Keep updated on legal compliance requirements"
+    ],
+    skills: ["Legal knowledge", "Process optimization", "Data management", "Compliance"],
+    education: "Legal background with technology skills or vice versa",
+    outlook: "Growing field as legal industry embraces digital transformation",
+    salary: "₹8-30 lakhs per year"
+  },
+  {
+    title: "Digital Forensics Analyst",
+    description: "Recover and investigate material found in digital devices related to cybercrime and other digital investigations.",
+    traits: ["Analytical", "TechAptitude", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Learn digital forensics tools and methodologies",
+      "Study cybersecurity fundamentals",
+      "Understand legal and ethical considerations",
+      "Practice with incident response scenarios"
+    ],
+    skills: ["Data recovery", "Malware analysis", "Chain of custody", "Investigative techniques"],
+    education: "Cybersecurity or computer science degree with forensics specialization",
+    outlook: "Increasing demand with rising cybercrime rates",
+    salary: "₹8-35 lakhs per year"
+  },
+  {
+    title: "DevOps Engineer",
+    description: "Bridge development and operations to streamline software deployment and infrastructure management.",
+    traits: ["TechAptitude", "WorkHabits", "Adaptability"],
+    score: 0,
+    actionableSteps: [
+      "Learn infrastructure as code tools like Terraform",
+      "Master containerization with Docker and Kubernetes",
+      "Study CI/CD pipelines and automation",
+      "Understand cloud infrastructure management"
+    ],
+    skills: ["Automation", "Cloud architecture", "System administration", "Programming"],
+    education: "Computer science or IT background with DevOps certifications",
+    outlook: "Essential role in modern software development",
+    salary: "₹8-40 lakhs per year"
+  },
+  {
+    title: "AI Ethics Consultant",
+    description: "Ensure ethical implementation of AI technologies and address bias, privacy, and fairness concerns.",
+    traits: ["Analytical", "Helpful", "MindStyles"],
+    score: 0,
+    actionableSteps: [
+      "Study AI fundamentals and limitations",
+      "Learn about ethical frameworks and regulations",
+      "Understand fairness and bias in algorithms",
+      "Develop skills in AI governance and policy"
+    ],
+    skills: ["Ethical analysis", "AI knowledge", "Communication", "Policy development"],
+    education: "Interdisciplinary background in technology ethics, philosophy, and computer science",
+    outlook: "Emerging critical role as AI adoption increases",
+    salary: "₹8-35 lakhs per year"
+  },
+  {
+    title: "Sustainable Architecture Designer",
+    description: "Design environmentally responsible buildings and spaces using sustainable materials and energy-efficient systems.",
+    traits: ["Creative", "HandsOn", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Learn green building standards and certifications",
+      "Study sustainable materials and construction methods",
+      "Understand renewable energy integration in buildings",
+      "Develop skills in environmental impact assessment"
+    ],
+    skills: ["Architectural design", "Environmental analysis", "3D modeling", "Sustainable systems"],
+    education: "Architecture degree with sustainability specialization",
+    outlook: "Growing field with increasing focus on environmental impact",
+    salary: "₹8-35 lakhs per year"
+  },
+  {
+    title: "Chief Sustainability Officer",
+    description: "Lead organizational sustainability initiatives, reducing environmental impact while improving business performance.",
+    traits: ["Leadership", "Innovation", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Learn about environmental management systems",
+      "Study corporate sustainability reporting frameworks",
+      "Understand sustainable supply chain management",
+      "Develop skills in stakeholder engagement"
+    ],
+    skills: ["Strategic planning", "Environmental knowledge", "Change management", "Reporting"],
+    education: "Business or environmental science background with sustainability credentials",
+    outlook: "Increasingly important C-suite role as sustainability becomes business-critical",
+    salary: "₹15-60 lakhs per year"
+  },
+  {
+    title: "Remote Work Experience Designer",
+    description: "Create and implement strategies and systems that optimize remote and hybrid work environments.",
+    traits: ["Adaptability", "Innovation", "Helpful"],
+    score: 0,
+    actionableSteps: [
+      "Learn about digital collaboration tools and systems",
+      "Study remote work psychology and productivity",
+      "Understand virtual team building and engagement",
+      "Develop skills in workspace design and ergonomics"
+    ],
+    skills: ["Digital workplace design", "Change management", "Process optimization", "Employee experience"],
+    education: "HR, organizational psychology, or design thinking background",
+    outlook: "Growing role as remote and hybrid work models become permanent",
+    salary: "₹7-25 lakhs per year"
+  },
+  {
+    title: "Bioinformatics Specialist",
+    description: "Apply computational techniques to analyze and interpret biological data, especially in genomics and drug discovery.",
+    traits: ["Analytical", "TechAptitude", "MindStyles"],
+    score: 0,
+    actionableSteps: [
+      "Learn programming for biological data analysis",
+      "Study genomics and molecular biology fundamentals",
+      "Understand bioinformatics algorithms and databases",
+      "Practice with real-world biological datasets"
+    ],
+    skills: ["Computational biology", "Data analysis", "Statistical methods", "Research"],
+    education: "Biology background with computer science skills or vice versa",
+    outlook: "Expanding field with personalized medicine and genomics advancements",
+    salary: "₹7-35 lakhs per year"
   }
 ];
 
@@ -582,39 +718,86 @@ export const generalCareerAdvice = [
   }
 ];
 
+// Refined trait scoring explanation for counselors
+export const scoringMethodology = {
+  questionScoring: "Each question is scored on a 1-5 scale, with 5 representing strong agreement and 1 representing strong disagreement.",
+  traitCalculation: "Trait scores are calculated as the average of all answered questions within that trait category. For StressManagement, scores are inverted (6 minus the score) so that higher scores represent better stress management.",
+  careerMatching: "Career matches are determined by calculating how well a student's top traits align with each career's required traits. The matching algorithm assigns a percentage score based on the average of relevant trait scores divided by the maximum possible score.",
+  interpretationGuidance: "When interpreting results, focus on patterns across related traits rather than small differences between individual scores. The top three traits and corresponding career matches provide the most meaningful insights."
+};
+
+// Example analysis guide for counselors
+export const counselorGuidelines = [
+  {
+    area: "Identifying Core Strengths",
+    description: "Look beyond the top three traits to identify clusters of related strengths. For example, high scores in Analytical, TechAptitude, and Innovation suggest strong technical problem-solving abilities."
+  },
+  {
+    area: "Addressing Growth Areas",
+    description: "Lower scored traits represent potential areas for development, not limitations. Help students create specific action plans to develop these traits if they're important for their desired career paths."
+  },
+  {
+    area: "Balancing Interests and Aptitudes",
+    description: "Sometimes a student's interests (what they enjoy) may differ from their natural aptitudes (what they're good at). Help them explore careers that can balance both or find ways to incorporate interests into careers that match their strengths."
+  },
+  {
+    area: "Exploring Career Clusters",
+    description: "Guide students to explore groups of related careers rather than fixating on a single job title. This broadens their options and allows for more flexible career planning."
+  },
+  {
+    area: "Creating Development Pathways",
+    description: "Help students create concrete next steps based on career matches, focusing on education, skill development, and experiential learning opportunities that align with their traits and aspirations."
+  }
+];
+
+// Enhanced career matching algorithm with more sophisticated weighting
+export const calculateCareerMatches = (results: AssessmentResult): CareerSuggestion[] => {
+  const maxPossibleScore = 5; // Max score on our 1-5 scale
+  
+  // Calculate weighted trait importance for each career
+  const calculatedSuggestions = careerSuggestions.map(suggestion => {
+    // Give more weight to the primary traits needed for each career
+    const primaryTrait = suggestion.traits[0];
+    const secondaryTraits = suggestion.traits.slice(1);
+    
+    // Primary trait has 50% weight, secondary traits share the remaining 50%
+    const primaryWeight = 0.5;
+    const secondaryWeight = 0.5 / secondaryTraits.length;
+    
+    let weightedScore = 0;
+    let totalWeight = 0;
+    
+    // Calculate primary trait contribution
+    if (results[primaryTrait]) {
+      weightedScore += (results[primaryTrait] / maxPossibleScore) * primaryWeight;
+      totalWeight += primaryWeight;
+    }
+    
+    // Calculate secondary traits contribution
+    secondaryTraits.forEach(trait => {
+      if (results[trait]) {
+        weightedScore += (results[trait] / maxPossibleScore) * secondaryWeight;
+        totalWeight += secondaryWeight;
+      }
+    });
+    
+    // Normalize the score based on available traits
+    const normalizedScore = totalWeight > 0 ? weightedScore / totalWeight : 0;
+    
+    return {
+      ...suggestion,
+      score: normalizedScore
+    };
+  });
+  
+  return calculatedSuggestions.sort((a, b) => b.score - a.score);
+};
+
 export const getTopTraits = (results: Record<TraitCategory, number>, count: number = 3): TraitCategory[] => {
   return Object.entries(results)
     .sort(([, a], [, b]) => b - a)
     .slice(0, count)
     .map(([trait]) => trait as TraitCategory);
-};
-
-export const calculateCareerMatches = (results: Record<TraitCategory, number>): CareerSuggestion[] => {
-  const normalizedResults = { ...results };
-  const maxPossibleScore = 5; // Max score on our 1-5 scale
-  
-  const calculatedSuggestions = careerSuggestions.map(suggestion => {
-    let traitMatchSum = 0;
-    let relevantTraitCount = 0;
-    
-    suggestion.traits.forEach(trait => {
-      if (normalizedResults[trait]) {
-        traitMatchSum += normalizedResults[trait];
-        relevantTraitCount++;
-      }
-    });
-    
-    const score = relevantTraitCount > 0 
-      ? traitMatchSum / (relevantTraitCount * maxPossibleScore) 
-      : 0;
-    
-    return {
-      ...suggestion,
-      score
-    };
-  });
-  
-  return calculatedSuggestions.sort((a, b) => b.score - a.score);
 };
 
 export const getAllCareerSuggestions = (): CareerSuggestion[] => {

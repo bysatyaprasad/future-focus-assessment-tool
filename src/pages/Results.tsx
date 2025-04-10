@@ -20,8 +20,10 @@ import {
   DollarSign,
   GraduationCap,
   ListChecks,
-  Info
+  Info,
+  BookOpen
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Results = () => {
   const { calculateResults, getCareerMatches, getTopTraits, getTotalCareerCount, goToStart } = useAssessment();
@@ -53,9 +55,15 @@ const Results = () => {
           className="text-center"
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Career Compass Results!</h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-2">
             Based on your answers, we've identified your top traits and career matches
           </p>
+          <div className="text-sm text-app-purple mb-6">
+            <Link to="/counselor-guide" className="inline-flex items-center gap-1 hover:underline">
+              <BookOpen className="h-3.5 w-3.5" />
+              Career Counselor Guide
+            </Link>
+          </div>
         </motion.div>
 
         <Tabs defaultValue="traits" onValueChange={setActiveTab}>
@@ -147,7 +155,7 @@ const Results = () => {
                       <div className="text-right">
                         <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-app-green">
                           <span className="font-bold text-gray-800">
-                            {Math.round(career.score * 20)}%
+                            {Math.round(career.score * 100)}%
                           </span>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">Match</p>

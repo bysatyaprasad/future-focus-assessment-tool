@@ -44,3 +44,15 @@ export type CareerSuggestion = {
   outlook?: string;
   salary?: string;
 };
+
+export type ScoringMethodology = {
+  questionScoring: string;
+  traitCalculation: string;
+  careerMatching: string;
+  interpretationGuidance: string;
+};
+
+export type CounselorGuideline = {
+  area: string;
+  description: string;
+};
