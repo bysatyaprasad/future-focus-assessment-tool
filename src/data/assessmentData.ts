@@ -48,6 +48,26 @@ const personalityQuestions: Question[] = [
     text: "I get upset easily when things don't go as planned or as expected.",
     category: "StressManagement",
   },
+  {
+    id: "p10",
+    text: "I find it easy to adjust to new situations or changes.",
+    category: "Adaptability",
+  },
+  {
+    id: "p11",
+    text: "I can quickly learn new technologies or digital tools.",
+    category: "TechAptitude",
+  },
+  {
+    id: "p12",
+    text: "I often think of unique solutions to problems.",
+    category: "Innovation",
+  },
+  {
+    id: "p13",
+    text: "I keep trying even when things get difficult.",
+    category: "Resilience",
+  },
 ];
 
 // Interests Assessment Questions
@@ -112,6 +132,26 @@ const interestQuestions: Question[] = [
     text: "I enjoy organizing information and working with data.",
     category: "Organized",
   },
+  {
+    id: "i13",
+    text: "I enjoy working with digital tools and technologies.",
+    category: "TechAptitude",
+  },
+  {
+    id: "i14",
+    text: "I'm comfortable trying new methods or approaches.",
+    category: "Adaptability",
+  },
+  {
+    id: "i15",
+    text: "I like coming up with creative solutions to problems.",
+    category: "Innovation",
+  },
+  {
+    id: "i16",
+    text: "I don't give up easily when facing challenges.",
+    category: "Resilience",
+  },
 ];
 
 export const assessmentSections: AssessmentSection[] = [
@@ -131,10 +171,52 @@ export const assessmentSections: AssessmentSection[] = [
 
 export const careerSuggestions: CareerSuggestion[] = [
   {
-    title: "Technology & Computing",
-    description: "Careers involving computers, programming, software development, or IT support.",
-    traits: ["Analytical", "HandsOn", "WorkHabits"],
-    score: 0
+    title: "Data Scientist",
+    description: "Analyze complex data sets to find patterns and insights that help organizations make better decisions.",
+    traits: ["Analytical", "TechAptitude", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Learn Python, R, and SQL",
+      "Take online courses in statistics and machine learning",
+      "Build a portfolio of data analysis projects",
+      "Participate in data science competitions on Kaggle"
+    ],
+    skills: ["Statistical analysis", "Machine learning", "Data visualization", "Programming"],
+    education: "Bachelor's in statistics, mathematics, computer science, or related field",
+    outlook: "Projected 36% growth over the next decade",
+    salary: "₹8-35 lakhs per year depending on experience and location"
+  },
+  {
+    title: "AI/Machine Learning Engineer",
+    description: "Design and implement artificial intelligence systems and machine learning models.",
+    traits: ["TechAptitude", "Analytical", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Master programming in Python",
+      "Learn machine learning frameworks like TensorFlow and PyTorch",
+      "Take courses in deep learning and neural networks",
+      "Contribute to open-source AI projects"
+    ],
+    skills: ["Programming", "Math", "Problem-solving", "Algorithm design"],
+    education: "Bachelor's or Master's in computer science or related field",
+    outlook: "Projected 40% growth over the next decade",
+    salary: "₹10-45 lakhs per year depending on experience and company"
+  },
+  {
+    title: "Blockchain Developer",
+    description: "Create and maintain blockchain systems and smart contracts for various applications.",
+    traits: ["TechAptitude", "Innovation", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Learn blockchain fundamentals and cryptography",
+      "Master programming languages like Solidity and Rust",
+      "Build decentralized applications (DApps)",
+      "Join blockchain developer communities"
+    ],
+    skills: ["Smart contract development", "Cryptography", "Distributed systems", "Security"],
+    education: "Computer science background with specialized blockchain certifications",
+    outlook: "Growing demand as blockchain adoption increases across industries",
+    salary: "₹12-40 lakhs per year"
   },
   {
     title: "Healthcare & Medicine",
@@ -143,10 +225,90 @@ export const careerSuggestions: CareerSuggestion[] = [
     score: 0
   },
   {
+    title: "Digital Healthcare Specialist",
+    description: "Implement and manage digital health technologies and telemedicine systems.",
+    traits: ["TechAptitude", "Helpful", "Adaptability"],
+    score: 0,
+    actionableSteps: [
+      "Get healthcare IT certifications",
+      "Learn about electronic health records systems",
+      "Study telemedicine technologies",
+      "Understand healthcare data privacy regulations"
+    ],
+    skills: ["Healthcare IT", "Patient care", "Data management", "Digital communication"],
+    education: "Healthcare background with IT specialization or vice versa",
+    outlook: "Rapidly growing field with telemedicine adoption",
+    salary: "₹7-25 lakhs per year"
+  },
+  {
+    title: "UX/UI Designer",
+    description: "Create user-friendly interfaces and experiences for websites and applications.",
+    traits: ["Creative", "TechAptitude", "Helpful"],
+    score: 0,
+    actionableSteps: [
+      "Build a portfolio of design projects",
+      "Learn design tools like Figma and Adobe XD",
+      "Study user research methodologies",
+      "Practice prototyping and user testing"
+    ],
+    skills: ["Visual design", "User research", "Prototyping", "Information architecture"],
+    education: "Design degree or specialized UX/UI bootcamp",
+    outlook: "Consistent demand across all digital industries",
+    salary: "₹5-30 lakhs per year"
+  },
+  {
+    title: "Cybersecurity Specialist",
+    description: "Protect organizations' computer systems and networks from security threats.",
+    traits: ["Analytical", "TechAptitude", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Get certified in security+ or CISSP",
+      "Learn ethical hacking techniques",
+      "Practice in virtual security labs",
+      "Stay updated on latest security threats"
+    ],
+    skills: ["Network security", "Threat analysis", "Security monitoring", "Incident response"],
+    education: "Computer science background with cybersecurity certifications",
+    outlook: "Critical growing field with persistent skills gap",
+    salary: "₹8-40 lakhs per year"
+  },
+  {
     title: "Arts & Design",
     description: "Creative careers in visual arts, performing arts, design, or content creation.",
     traits: ["Creative", "MindStyles", "ExpressionStyle"],
     score: 0
+  },
+  {
+    title: "Digital Content Creator",
+    description: "Create engaging content for social media, websites, and other digital platforms.",
+    traits: ["Creative", "ExpressionStyle", "Adaptability"],
+    score: 0,
+    actionableSteps: [
+      "Build a personal brand on social platforms",
+      "Learn content creation tools for video, graphics, and audio",
+      "Understand digital marketing basics",
+      "Create a consistent content calendar"
+    ],
+    skills: ["Storytelling", "Video production", "Social media management", "Audience engagement"],
+    education: "Communications, marketing, or self-taught with strong portfolio",
+    outlook: "Expanding rapidly with growing creator economy",
+    salary: "₹3-40 lakhs per year (highly variable based on audience and monetization)"
+  },
+  {
+    title: "Digital Marketer",
+    description: "Plan and execute marketing campaigns across digital channels.",
+    traits: ["Creative", "Leadership", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Get Google and social media marketing certifications",
+      "Learn SEO and content marketing strategies",
+      "Practice data analysis for marketing performance",
+      "Create sample campaigns for your portfolio"
+    ],
+    skills: ["SEO", "Content strategy", "Social media marketing", "Analytics"],
+    education: "Marketing degree or specialized digital marketing certifications",
+    outlook: "Essential role in virtually all businesses",
+    salary: "₹4-25 lakhs per year"
   },
   {
     title: "Business & Leadership",
@@ -155,10 +317,58 @@ export const careerSuggestions: CareerSuggestion[] = [
     score: 0
   },
   {
+    title: "Product Manager",
+    description: "Guide product development from concept to launch, balancing business and user needs.",
+    traits: ["Leadership", "Adaptability", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Learn product development methodologies like Agile",
+      "Understand user research and feedback collection",
+      "Practice product roadmapping and prioritization",
+      "Develop technical knowledge relevant to your product area"
+    ],
+    skills: ["Strategic thinking", "Team leadership", "User empathy", "Communication"],
+    education: "Business background with technical knowledge or vice versa",
+    outlook: "Key role in tech companies and product-based businesses",
+    salary: "₹10-40 lakhs per year"
+  },
+  {
+    title: "Business Analytics Manager",
+    description: "Use data analysis to improve business operations and guide strategic decisions.",
+    traits: ["Analytical", "Leadership", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Master Excel and data visualization tools",
+      "Learn SQL for database queries",
+      "Study business intelligence platforms",
+      "Practice presenting data insights to non-technical audiences"
+    ],
+    skills: ["Data analysis", "Business strategy", "Reporting", "Problem-solving"],
+    education: "Business or analytics degree with professional experience",
+    outlook: "Critical role in data-driven organizations",
+    salary: "₹8-35 lakhs per year"
+  },
+  {
     title: "Education & Teaching",
     description: "Jobs focused on teaching, training, and helping others learn and grow.",
     traits: ["Helpful", "MindStyles", "TeamSpirit"],
     score: 0
+  },
+  {
+    title: "EdTech Specialist",
+    description: "Develop and implement technology solutions for educational purposes.",
+    traits: ["TechAptitude", "Helpful", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Learn about learning management systems",
+      "Study instructional design principles",
+      "Understand ed-tech tools and platforms",
+      "Stay informed about educational psychology and teaching methods"
+    ],
+    skills: ["Educational technology", "Curriculum design", "Training", "Digital learning"],
+    education: "Education background with tech skills or tech background with teaching interest",
+    outlook: "Growing field as education continues to digitize",
+    salary: "₹5-20 lakhs per year"
   },
   {
     title: "Science & Research",
@@ -167,10 +377,74 @@ export const careerSuggestions: CareerSuggestion[] = [
     score: 0
   },
   {
+    title: "Biotechnology Researcher",
+    description: "Develop biological solutions in medicine, agriculture, and environmental conservation.",
+    traits: ["Analytical", "Innovation", "WorkHabits"],
+    score: 0,
+    actionableSteps: [
+      "Focus on biology, chemistry, and computational biology",
+      "Learn lab techniques and procedures",
+      "Participate in research projects",
+      "Follow advancements in genomics and molecular biology"
+    ],
+    skills: ["Lab techniques", "Data analysis", "Research methodology", "Scientific writing"],
+    education: "Degree in biotechnology, molecular biology, or related field",
+    outlook: "Growing field with applications in healthcare, agriculture, and beyond",
+    salary: "₹4-30 lakhs per year"
+  },
+  {
+    title: "Environmental Scientist",
+    description: "Study environmental conditions and develop solutions to protect the environment.",
+    traits: ["Analytical", "MindStyles", "Resilience"],
+    score: 0,
+    actionableSteps: [
+      "Study environmental science fundamentals",
+      "Learn about sustainable practices and technologies",
+      "Develop field research skills",
+      "Understand environmental policy and regulations"
+    ],
+    skills: ["Environmental analysis", "Conservation", "Sustainable planning", "Research"],
+    education: "Environmental science or related degree",
+    outlook: "Increasing importance with climate change and sustainability focus",
+    salary: "₹5-15 lakhs per year"
+  },
+  {
     title: "Building & Engineering",
     description: "Hands-on work creating, fixing, or improving physical structures and systems.",
     traits: ["HandsOn", "WorkHabits", "Analytical"],
     score: 0
+  },
+  {
+    title: "Renewable Energy Engineer",
+    description: "Design and develop systems that generate clean, sustainable energy.",
+    traits: ["HandsOn", "Innovation", "TechAptitude"],
+    score: 0,
+    actionableSteps: [
+      "Study electrical or mechanical engineering fundamentals",
+      "Learn about different renewable energy technologies",
+      "Understand energy storage systems",
+      "Study energy efficiency principles"
+    ],
+    skills: ["System design", "Technical problem-solving", "Project management", "Sustainability"],
+    education: "Engineering degree with renewable energy specialization",
+    outlook: "High growth as countries transition to clean energy",
+    salary: "₹6-25 lakhs per year"
+  },
+  {
+    title: "Robotics Engineer",
+    description: "Design, build, and maintain robots and automated systems for various applications.",
+    traits: ["HandsOn", "TechAptitude", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Learn programming for robotics (Python, C++)",
+      "Study mechanical and electrical engineering basics",
+      "Practice with robotics kits and platforms",
+      "Understand AI and computer vision principles"
+    ],
+    skills: ["Robotics programming", "Mechanical design", "System integration", "Problem-solving"],
+    education: "Engineering degree with robotics focus or specialized certifications",
+    outlook: "Growing field with applications across industries",
+    salary: "₹7-35 lakhs per year"
   },
   {
     title: "Organization & Administration",
@@ -178,6 +452,86 @@ export const careerSuggestions: CareerSuggestion[] = [
     traits: ["Organized", "WorkHabits", "TeamSpirit"],
     score: 0
   },
+  {
+    title: "Project Manager",
+    description: "Plan, execute, and oversee projects from start to finish, ensuring they meet goals.",
+    traits: ["Organized", "Leadership", "Adaptability"],
+    score: 0,
+    actionableSteps: [
+      "Learn project management methodologies (Agile, Scrum, etc.)",
+      "Get certified in project management (PMP, PRINCE2)",
+      "Practice planning and scheduling techniques",
+      "Develop team leadership and communication skills"
+    ],
+    skills: ["Planning", "Team coordination", "Risk management", "Stakeholder communication"],
+    education: "Degree with project management certifications",
+    outlook: "Essential role across all industries",
+    salary: "₹7-30 lakhs per year"
+  },
+  {
+    title: "Supply Chain Analyst",
+    description: "Optimize supply chains to improve efficiency, reduce costs, and ensure reliability.",
+    traits: ["Organized", "Analytical", "Adaptability"],
+    score: 0,
+    actionableSteps: [
+      "Learn supply chain management fundamentals",
+      "Study logistics and inventory management",
+      "Understand supply chain software and technologies",
+      "Practice data analysis for optimization"
+    ],
+    skills: ["Logistics planning", "Process optimization", "Analytics", "Vendor management"],
+    education: "Business, supply chain, or logistics degree",
+    outlook: "Critical role as global supply chains evolve",
+    salary: "₹6-20 lakhs per year"
+  },
+  {
+    title: "Financial Analyst",
+    description: "Analyze financial data to guide investment decisions and business strategy.",
+    traits: ["Analytical", "WorkHabits", "Organized"],
+    score: 0,
+    actionableSteps: [
+      "Learn financial modeling and analysis",
+      "Study market trends and investment principles",
+      "Practice with financial software and tools",
+      "Understand risk assessment and portfolio management"
+    ],
+    skills: ["Financial modeling", "Data analysis", "Investment knowledge", "Report creation"],
+    education: "Finance, accounting, or economics degree",
+    outlook: "Consistently important role in business and investment",
+    salary: "₹6-30 lakhs per year"
+  },
+  {
+    title: "Cloud Computing Specialist",
+    description: "Design, implement, and manage cloud computing infrastructure and services.",
+    traits: ["TechAptitude", "Adaptability", "Analytical"],
+    score: 0,
+    actionableSteps: [
+      "Get certified in major cloud platforms (AWS, Azure, Google Cloud)",
+      "Learn cloud architecture principles",
+      "Study DevOps and automation tools",
+      "Understand cloud security best practices"
+    ],
+    skills: ["Cloud architecture", "Network infrastructure", "Security", "Automation"],
+    education: "IT background with cloud certifications",
+    outlook: "High demand as businesses move to cloud environments",
+    salary: "₹8-35 lakhs per year"
+  },
+  {
+    title: "Augmented/Virtual Reality Developer",
+    description: "Create immersive AR/VR experiences for education, entertainment, and business applications.",
+    traits: ["TechAptitude", "Creative", "Innovation"],
+    score: 0,
+    actionableSteps: [
+      "Learn 3D modeling and game development engines",
+      "Study AR/VR design principles",
+      "Practice creating interactive experiences",
+      "Understand spatial computing concepts"
+    ],
+    skills: ["3D development", "Interactive design", "Programming", "User experience"],
+    education: "Computer science or design background with AR/VR focus",
+    outlook: "Growing field with expanded applications across industries",
+    salary: "₹8-25 lakhs per year"
+  }
 ];
 
 export const traitDescriptions: Record<TraitCategory, string> = {
@@ -191,8 +545,43 @@ export const traitDescriptions: Record<TraitCategory, string> = {
   Creative: "You enjoy expressing yourself through creative activities.",
   Helpful: "You find satisfaction in helping and supporting others.",
   Leadership: "You're comfortable taking charge and guiding others.",
-  Organized: "You prefer structure, clear rules, and organized information."
+  Organized: "You prefer structure, clear rules, and organized information.",
+  TechAptitude: "You have a natural ability to understand and work with technology.",
+  Adaptability: "You easily adjust to new situations and embrace change.",
+  Innovation: "You think outside the box and come up with creative solutions.",
+  Resilience: "You bounce back from setbacks and persist through challenges."
 };
+
+export const generalCareerAdvice = [
+  {
+    title: "Build a Digital Portfolio",
+    description: "Create an online portfolio showcasing your projects, skills, and achievements. This serves as proof of your abilities beyond just a resume."
+  },
+  {
+    title: "Develop Tech Literacy",
+    description: "No matter your career path, basic programming knowledge, data analysis skills, and comfort with digital tools will give you an edge in any field."
+  },
+  {
+    title: "Focus on Hybrid Skills",
+    description: "Combine technical skills with soft skills like communication, creativity, and critical thinking. These combinations are rare and highly valuable."
+  },
+  {
+    title: "Embrace Continuous Learning",
+    description: "Set aside time each week for learning new skills through online courses, books, or practice. The most successful people never stop learning."
+  },
+  {
+    title: "Build a Professional Network",
+    description: "Connect with professionals in your field through LinkedIn, industry events, and online communities. Many opportunities come through networking."
+  },
+  {
+    title: "Create Multiple Income Streams",
+    description: "Beyond your main job, develop side projects, freelance work, or passive income sources to increase financial security and growth potential."
+  },
+  {
+    title: "Develop In-demand Skills",
+    description: "Research which skills are growing in demand in your field and invest time in mastering them before they become mainstream requirements."
+  }
+];
 
 export const getTopTraits = (results: Record<TraitCategory, number>, count: number = 3): TraitCategory[] => {
   return Object.entries(results)

@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { AssessmentSection, TraitCategory, AssessmentResult, CareerSuggestion } from "@/types/assessment";
 import { assessmentSections, calculateCareerMatches, getTopTraits } from "@/data/assessmentData";
 
@@ -42,12 +41,33 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [currentView, setCurrentView] = useState<"welcome" | "assessment" | "results">("welcome");
+  const [currentView, setCurrentViewState] = useState<"welcome" | "assessment" | "results">("welcome");
+  
+  useEffect(() => {
+    const savedAnswers = localStorage.getItem("assessmentAnswers");
+    if (savedAnswers) {
+      try {
+        setAnswers(JSON.parse(savedAnswers));
+      } catch (e) {
+        console.error("Error parsing saved answers:", e);
+      }
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (Object.keys(answers).length > 0) {
+      localStorage.setItem("assessmentAnswers", JSON.stringify(answers));
+    }
+  }, [answers]);
+
+  const setCurrentView = (view: "welcome" | "assessment" | "results") => {
+    setCurrentViewState(view);
+    localStorage.setItem("currentView", view);
+  };
 
   const calculateResults = (): AssessmentResult => {
     const results = {} as AssessmentResult;
     
-    // Initialize all trait categories with 0
     const allCategories = Object.values(assessmentSections)
       .flatMap(section => section.questions)
       .map(q => q.category);
@@ -57,7 +77,6 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
       results[category] = 0;
     });
     
-    // Calculate average score for each trait category
     uniqueCategories.forEach(category => {
       const questionsInCategory = Object.values(assessmentSections)
         .flatMap(section => section.questions)
@@ -67,8 +86,6 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
         return sum + (answers[q.id] || 0);
       }, 0);
       
-      // For StressManagement, we invert the score (5 becomes 1, 4 becomes 2, etc.)
-      // because higher anxiety means lower stress management skills
       if (category === "StressManagement") {
         const answeredQuestions = questionsInCategory.filter(q => answers[q.id] !== undefined).length;
         if (answeredQuestions > 0) {
@@ -141,6 +158,8 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     setCurrentQuestionIndex(0);
     setAnswers({});
     setCurrentView("welcome");
+    localStorage.removeItem("assessmentAnswers");
+    localStorage.removeItem("currentView");
   };
 
   const getSectionProgress = () => {

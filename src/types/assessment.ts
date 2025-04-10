@@ -10,7 +10,11 @@ export type TraitCategory =
   | "Creative" // Artistic
   | "Helpful" // Social
   | "Leadership" // Enterprising
-  | "Organized"; // Conventional
+  | "Organized" // Conventional
+  | "TechAptitude" // Digital/Tech affinity
+  | "Adaptability" // Flexibility to change
+  | "Innovation" // Problem-solving approach
+  | "Resilience"; // Persistence through challenges
 
 export type Question = {
   id: string;
@@ -34,4 +38,9 @@ export type CareerSuggestion = {
   description: string;
   traits: TraitCategory[];
   score: number;
+  actionableSteps?: string[];
+  skills?: string[];
+  education?: string;
+  outlook?: string;
+  salary?: string;
 };
