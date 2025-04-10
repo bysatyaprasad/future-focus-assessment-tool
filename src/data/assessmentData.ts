@@ -1,5 +1,5 @@
-
 import { AssessmentSection, Question, TraitCategory, CareerSuggestion, AssessmentResult } from "@/types/assessment";
+import { additionalCareers } from "./additionalCareers";
 
 // Personality Assessment Questions
 const personalityQuestions: Question[] = [
@@ -169,8 +169,8 @@ export const assessmentSections: AssessmentSection[] = [
   },
 ];
 
-// Expanded list of high-income, future-ready careers
-export const careerSuggestions: CareerSuggestion[] = [
+// Original career suggestions from the previous implementation
+const originalCareers: CareerSuggestion[] = [
   {
     title: "Data Scientist",
     description: "Analyze complex data sets to find patterns and insights that help organizations make better decisions.",
@@ -669,6 +669,9 @@ export const careerSuggestions: CareerSuggestion[] = [
   }
 ];
 
+// Combine original careers with additional careers to get 100+ total
+export const careerSuggestions: CareerSuggestion[] = [...originalCareers, ...additionalCareers];
+
 export const traitDescriptions: Record<TraitCategory, string> = {
   MindStyles: "You enjoy exploring new ideas and learning about different things.",
   WorkHabits: "You're organized and good at completing tasks on time.",
@@ -718,35 +721,50 @@ export const generalCareerAdvice = [
   }
 ];
 
-// Refined trait scoring explanation for counselors
+// Enhanced scoring methodology with more detailed explanations
 export const scoringMethodology = {
-  questionScoring: "Each question is scored on a 1-5 scale, with 5 representing strong agreement and 1 representing strong disagreement.",
-  traitCalculation: "Trait scores are calculated as the average of all answered questions within that trait category. For StressManagement, scores are inverted (6 minus the score) so that higher scores represent better stress management.",
-  careerMatching: "Career matches are determined by calculating how well a student's top traits align with each career's required traits. The matching algorithm assigns a percentage score based on the average of relevant trait scores divided by the maximum possible score.",
-  interpretationGuidance: "When interpreting results, focus on patterns across related traits rather than small differences between individual scores. The top three traits and corresponding career matches provide the most meaningful insights."
+  questionScoring: "Each question is scored on a 1-5 scale, with 5 representing strong agreement and 1 representing strong disagreement. This provides a nuanced measure of trait intensity rather than a binary yes/no approach.",
+  
+  traitCalculation: "Trait scores are calculated as the average of all answered questions within that trait category, ensuring that traits with more questions aren't overweighted. For StressManagement, scores are inverted (6 minus the score) so that higher scores represent better stress management ability.",
+  
+  careerMatching: "Career matches are determined by a weighted scoring algorithm that prioritizes primary traits for each career. The primary trait (first listed) accounts for 50% of the match score, while secondary traits share the remaining 50%. This approach ensures that careers requiring a strong primary trait are matched accordingly.",
+  
+  interpretationGuidance: "When interpreting results, counselors should focus on patterns across related traits rather than small differences between individual scores. The top three traits and corresponding career matches provide the most meaningful insights, while trait scores below 2.5 may indicate potential areas for personal development."
 };
 
-// Example analysis guide for counselors
+// Expanded counselor guidelines with more specific interpretation advice
 export const counselorGuidelines = [
   {
     area: "Identifying Core Strengths",
-    description: "Look beyond the top three traits to identify clusters of related strengths. For example, high scores in Analytical, TechAptitude, and Innovation suggest strong technical problem-solving abilities."
+    description: "Look beyond the top three traits to identify clusters of related strengths. For example, high scores in Analytical, TechAptitude, and Innovation suggest strong technical problem-solving abilities that could be applied across multiple STEM fields. Consider how these strength clusters might translate to career families rather than specific job titles."
   },
   {
     area: "Addressing Growth Areas",
-    description: "Lower scored traits represent potential areas for development, not limitations. Help students create specific action plans to develop these traits if they're important for their desired career paths."
+    description: "Lower scored traits represent potential areas for development, not limitations. Help students create specific action plans to develop these traits if they're important for their desired career paths. For each low-scoring trait, identify 2-3 concrete activities that would help build that capacity through practice and exposure."
   },
   {
     area: "Balancing Interests and Aptitudes",
-    description: "Sometimes a student's interests (what they enjoy) may differ from their natural aptitudes (what they're good at). Help them explore careers that can balance both or find ways to incorporate interests into careers that match their strengths."
+    description: "Sometimes a student's interests (what they enjoy) may differ from their natural aptitudes (what they're good at). Help them explore careers that can balance both or find ways to incorporate interests into careers that match their strengths. Discuss the concept of 'flow state' where challenges match skills for optimal engagement and satisfaction."
   },
   {
     area: "Exploring Career Clusters",
-    description: "Guide students to explore groups of related careers rather than fixating on a single job title. This broadens their options and allows for more flexible career planning."
+    description: "Guide students to explore groups of related careers rather than fixating on a single job title. This broadens their options and allows for more flexible career planning. Use the O*NET Career Clusters framework to show how different careers within a cluster share underlying skills and knowledge domains, facilitating lateral movement over time."
   },
   {
     area: "Creating Development Pathways",
-    description: "Help students create concrete next steps based on career matches, focusing on education, skill development, and experiential learning opportunities that align with their traits and aspirations."
+    description: "Help students create concrete next steps based on career matches, focusing on education, skill development, and experiential learning opportunities that align with their traits and aspirations. Map out both immediate actions (next 3-6 months) and longer-term development goals (1-3 years) to create a practical roadmap."
+  },
+  {
+    area: "Interpreting Mixed Profiles",
+    description: "Some students will show high scores across seemingly contrasting traits, such as both Creative and Analytical, or both Leadership and TeamSpirit. Help them see these combinations as unique strengths that could lead to specialized roles that bridge different domains, like creative technology or collaborative leadership positions."
+  },
+  {
+    area: "Discussing Trait Intensity",
+    description: "Very high scores (4.5+) in certain traits may indicate particular passion areas that should be central to career planning. Similarly, particularly low scores (below 2.0) might suggest areas where the student would be consistently drained if required to use these traits extensively in their daily work."
+  },
+  {
+    area: "Contextualizing Results",
+    description: "Remind students that these assessments capture a point-in-time snapshot and that traits can develop over time with intention and practice. Discuss how life experiences, education, and personal growth can shape these characteristics, and how the assessment results represent tendencies rather than fixed limitations."
   }
 ];
 
@@ -758,52 +776,4 @@ export const calculateCareerMatches = (results: AssessmentResult): CareerSuggest
   const calculatedSuggestions = careerSuggestions.map(suggestion => {
     // Give more weight to the primary traits needed for each career
     const primaryTrait = suggestion.traits[0];
-    const secondaryTraits = suggestion.traits.slice(1);
-    
-    // Primary trait has 50% weight, secondary traits share the remaining 50%
-    const primaryWeight = 0.5;
-    const secondaryWeight = 0.5 / secondaryTraits.length;
-    
-    let weightedScore = 0;
-    let totalWeight = 0;
-    
-    // Calculate primary trait contribution
-    if (results[primaryTrait]) {
-      weightedScore += (results[primaryTrait] / maxPossibleScore) * primaryWeight;
-      totalWeight += primaryWeight;
-    }
-    
-    // Calculate secondary traits contribution
-    secondaryTraits.forEach(trait => {
-      if (results[trait]) {
-        weightedScore += (results[trait] / maxPossibleScore) * secondaryWeight;
-        totalWeight += secondaryWeight;
-      }
-    });
-    
-    // Normalize the score based on available traits
-    const normalizedScore = totalWeight > 0 ? weightedScore / totalWeight : 0;
-    
-    return {
-      ...suggestion,
-      score: normalizedScore
-    };
-  });
-  
-  return calculatedSuggestions.sort((a, b) => b.score - a.score);
-};
-
-export const getTopTraits = (results: Record<TraitCategory, number>, count: number = 3): TraitCategory[] => {
-  return Object.entries(results)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, count)
-    .map(([trait]) => trait as TraitCategory);
-};
-
-export const getAllCareerSuggestions = (): CareerSuggestion[] => {
-  return careerSuggestions;
-};
-
-export const getTotalCareerCount = (): number => {
-  return careerSuggestions.length;
-};
+    const secondaryTraits = suggestion.traits.slice(

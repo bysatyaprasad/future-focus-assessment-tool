@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CounselorGuide from "./pages/CounselorGuide";
 
+// Set page title
+document.title = "Future Skills School - Career Assessment";
+
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
 

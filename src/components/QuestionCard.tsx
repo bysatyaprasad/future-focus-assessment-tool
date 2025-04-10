@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 type AnswerOption = {
   value: number;
   label: string;
+  description: string;
 };
 
 type QuestionCardProps = {
@@ -16,11 +17,11 @@ type QuestionCardProps = {
 };
 
 const answerOptions: AnswerOption[] = [
-  { value: 1, label: "Not at all like me" },
-  { value: 2, label: "Not really like me" },
-  { value: 3, label: "Somewhat like me" },
-  { value: 4, label: "Like me" },
-  { value: 5, label: "Very much like me" },
+  { value: 1, label: "Not at all like me", description: "This doesn't describe me" },
+  { value: 2, label: "Not really like me", description: "This rarely describes me" },
+  { value: 3, label: "Somewhat like me", description: "This sometimes describes me" },
+  { value: 4, label: "Like me", description: "This often describes me" },
+  { value: 5, label: "Very much like me", description: "This describes me perfectly" },
 ];
 
 const QuestionCard = ({ question, onAnswer, selectedValue }: QuestionCardProps) => {
@@ -32,23 +33,48 @@ const QuestionCard = ({ question, onAnswer, selectedValue }: QuestionCardProps) 
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <h3 className="text-xl text-center font-medium text-gray-800">{question}</h3>
+      <h3 className="text-xl md:text-2xl text-center font-medium text-gray-800 mb-8">
+        {question}
+      </h3>
       
-      <div className="mt-6 space-y-3">
+      <div className="mt-8 space-y-3">
         {answerOptions.map((option) => (
-          <Button
+          <motion.div
             key={option.value}
-            onClick={() => onAnswer(option.value)}
-            variant="outline"
-            className={cn(
-              "w-full py-4 text-left justify-start text-base border rounded-xl transition-all",
-              selectedValue === option.value
-                ? "bg-app-purple text-white border-app-purple"
-                : "hover:border-app-purple/50"
-            )}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            {option.label}
-          </Button>
+            <Button
+              onClick={() => onAnswer(option.value)}
+              variant="outline"
+              className={cn(
+                "w-full py-4 text-left justify-start text-base border rounded-xl transition-all",
+                selectedValue === option.value
+                  ? "bg-app-purple text-white border-app-purple"
+                  : "hover:border-app-purple/50 hover:bg-app-purple/5"
+              )}
+            >
+              <div className="flex items-center">
+                <div className={cn(
+                  "flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold",
+                  selectedValue === option.value 
+                    ? "bg-white text-app-purple" 
+                    : "bg-app-purple/10 text-app-purple"
+                )}>
+                  {option.value}
+                </div>
+                <div>
+                  <div className="font-medium">{option.label}</div>
+                  <div className={cn(
+                    "text-xs mt-1",
+                    selectedValue === option.value ? "text-white/80" : "text-gray-500"
+                  )}>
+                    {option.description}
+                  </div>
+                </div>
+              </div>
+            </Button>
+          </motion.div>
         ))}
       </div>
     </motion.div>

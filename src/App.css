@@ -1,10 +1,78 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
 }
 
+/* Assessment Container Styles */
+.assessment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.assessment-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(155, 135, 245, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #f3f4f6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9b87f5, #7E69AB);
+  border-radius: 999px;
+}
+
+/* Custom Font Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Custom backgrounds */
+.bg-gradient-soft {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.bg-gradient-purple {
+  background: linear-gradient(135deg, rgba(155, 135, 245, 0.2) 0%, rgba(126, 105, 171, 0.1) 100%);
+}
+
+/* Logo styles */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -18,6 +86,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
