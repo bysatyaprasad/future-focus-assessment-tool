@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { AssessmentSection, TraitCategory, AssessmentResult, CareerSuggestion } from "@/types/assessment";
-import { assessmentSections, calculateCareerMatches, getTopTraits, getTotalCareerCount } from "@/data/assessmentData";
+import { 
+  assessmentSections, 
+  calculateCareerMatches, 
+  getTopTraits, 
+  getTotalCareerCount, 
+  careerCategories 
+} from "@/data/assessmentData";
 
 type AssessmentContextType = {
   currentSectionIndex: number;
@@ -24,8 +30,9 @@ type AssessmentContextType = {
   isLastQuestion: () => boolean;
   isLastSection: () => boolean;
   isAssessmentComplete: () => boolean;
-  currentView: "welcome" | "assessment" | "results";
-  setCurrentView: (view: "welcome" | "assessment" | "results") => void;
+  currentView: "welcome" | "assessment" | "results" | "library";
+  setCurrentView: (view: "welcome" | "assessment" | "results" | "library") => void;
+  getCareerCategories: () => typeof careerCategories;
 };
 
 const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
@@ -42,15 +49,23 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [currentView, setCurrentViewState] = useState<"welcome" | "assessment" | "results">("welcome");
+  const [currentView, setCurrentViewState] = useState<"welcome" | "assessment" | "results" | "library">("welcome");
   
   useEffect(() => {
     const savedAnswers = localStorage.getItem("assessmentAnswers");
+    const savedView = localStorage.getItem("currentView");
+    
     if (savedAnswers) {
       try {
         setAnswers(JSON.parse(savedAnswers));
       } catch (e) {
         console.error("Error parsing saved answers:", e);
+      }
+    }
+    
+    if (savedView) {
+      if (savedView === "welcome" || savedView === "assessment" || savedView === "results" || savedView === "library") {
+        setCurrentViewState(savedView);
       }
     }
   }, []);
@@ -61,7 +76,7 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [answers]);
 
-  const setCurrentView = (view: "welcome" | "assessment" | "results") => {
+  const setCurrentView = (view: "welcome" | "assessment" | "results" | "library") => {
     setCurrentViewState(view);
     localStorage.setItem("currentView", view);
   };
@@ -83,23 +98,23 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
         .flatMap(section => section.questions)
         .filter(q => q.category === category);
       
-      const totalScore = questionsInCategory.reduce((sum, q) => {
-        return sum + (answers[q.id] || 0);
-      }, 0);
+      const answeredQuestions = questionsInCategory.filter(q => answers[q.id] !== undefined);
+      const answeredCount = answeredQuestions.length;
       
-      if (category === "StressManagement") {
-        const answeredQuestions = questionsInCategory.filter(q => answers[q.id] !== undefined).length;
-        if (answeredQuestions > 0) {
-          let invertedScore = questionsInCategory.reduce((sum, q) => {
-            return sum + (answers[q.id] ? 6 - answers[q.id] : 0);
+      if (answeredCount > 0) {
+        if (category === "StressManagement") {
+          const invertedScore = answeredQuestions.reduce((sum, q) => {
+            return sum + (6 - answers[q.id]);
           }, 0);
-          results[category] = invertedScore / (answeredQuestions || 1);
+          results[category] = +(invertedScore / answeredCount).toFixed(2);
+        } else {
+          const totalScore = answeredQuestions.reduce((sum, q) => {
+            return sum + answers[q.id];
+          }, 0);
+          results[category] = +(totalScore / answeredCount).toFixed(2);
         }
       } else {
-        const answeredQuestions = questionsInCategory.filter(q => answers[q.id] !== undefined).length;
-        if (answeredQuestions > 0) {
-          results[category] = totalScore / (answeredQuestions || 1);
-        }
+        results[category] = 3;
       }
     });
     
@@ -216,6 +231,10 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     return getTotalCareerCount();
   };
 
+  const getCareerCategories = () => {
+    return careerCategories;
+  };
+
   const context: AssessmentContextType = {
     currentSectionIndex,
     currentQuestionIndex,
@@ -240,6 +259,7 @@ export const AssessmentProvider = ({ children }: { children: ReactNode }) => {
     isAssessmentComplete,
     currentView,
     setCurrentView,
+    getCareerCategories,
   };
 
   return (

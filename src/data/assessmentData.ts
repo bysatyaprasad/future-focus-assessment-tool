@@ -1,4 +1,3 @@
-
 import { AssessmentSection, Question, TraitCategory, CareerSuggestion, AssessmentResult } from "@/types/assessment";
 import { additionalCareers } from "./additionalCareers";
 
@@ -693,36 +692,43 @@ export const traitDescriptions: Record<TraitCategory, string> = {
 
 export const generalCareerAdvice = [
   {
-    title: "Build a Digital Portfolio",
-    description: "Create an online portfolio showcasing your projects, skills, and achievements. This serves as proof of your abilities beyond just a resume."
+    title: "Focus on High-Value Skills",
+    description: "Identify and master skills that create disproportionate value. The market rewards those who solve expensive problems - find what few can do but many need, and become exceptional at it."
   },
   {
-    title: "Develop Tech Literacy",
-    description: "No matter your career path, basic programming knowledge, data analysis skills, and comfort with digital tools will give you an edge in any field."
+    title: "Build Multiple Income Streams",
+    description: "Never rely on a single source of income. Create additional revenue streams through side businesses, investments, or specialized services. Financial freedom comes from having options."
   },
   {
-    title: "Focus on Hybrid Skills",
-    description: "Combine technical skills with soft skills like communication, creativity, and critical thinking. These combinations are rare and highly valuable."
+    title: "Master Communication",
+    description: "Your ability to clearly convey ideas and persuade others will multiply the value of all your other skills. Articulate thoughts precisely, both in writing and speaking."
   },
   {
-    title: "Embrace Continuous Learning",
-    description: "Set aside time each week for learning new skills through online courses, books, or practice. The most successful people never stop learning."
+    title: "Own Assets, Not Liabilities",
+    description: "Direct your income toward things that generate more income (assets) rather than things that cost you money over time (liabilities). Build a portfolio of income-producing investments."
   },
   {
-    title: "Build a Professional Network",
-    description: "Connect with professionals in your field through LinkedIn, industry events, and online communities. Many opportunities come through networking."
+    title: "Become T-shaped",
+    description: "Develop deep expertise in one valuable area while maintaining broad knowledge across related fields. This combination makes you both specialized and adaptable."
   },
   {
-    title: "Create Multiple Income Streams",
-    description: "Beyond your main job, develop side projects, freelance work, or passive income sources to increase financial security and growth potential."
+    title: "Cultivate a Strong Network",
+    description: "Your network expands your opportunities exponentially. Invest time in meaningful relationships with ambitious, ethical people who challenge you to grow."
   },
   {
-    title: "Develop In-demand Skills",
-    description: "Research which skills are growing in demand in your field and invest time in mastering them before they become mainstream requirements."
+    title: "Develop Rare Skill Combinations",
+    description: "The intersection of two or more valuable skills creates a unique advantage that's hard to replicate. Combine technical knowledge with people skills, creativity with analysis, or domain expertise with business acumen."
+  },
+  {
+    title: "Create Systems for Success",
+    description: "Don't rely on motivation or willpower. Build reliable systems and habits that automatically move you toward your goals each day without requiring constant decisions."
+  },
+  {
+    title: "Embrace Calculated Risks",
+    description: "Growth happens outside your comfort zone. Take smart risks where the potential upside significantly outweighs the downside, especially earlier in your career when you have time to recover."
   }
 ];
 
-// Enhanced scoring methodology with more detailed explanations
 export const scoringMethodology = {
   questionScoring: "Each question is scored on a 1-5 scale, with 5 representing strong agreement and 1 representing strong disagreement. This provides a nuanced measure of trait intensity rather than a binary yes/no approach.",
   
@@ -733,7 +739,6 @@ export const scoringMethodology = {
   interpretationGuidance: "When interpreting results, counselors should focus on patterns across related traits rather than small differences between individual scores. The top three traits and corresponding career matches provide the most meaningful insights, while trait scores below 2.5 may indicate potential areas for personal development."
 };
 
-// Expanded counselor guidelines with more specific interpretation advice
 export const counselorGuidelines = [
   {
     area: "Identifying Core Strengths",
@@ -769,35 +774,54 @@ export const counselorGuidelines = [
   }
 ];
 
-// Enhanced career matching algorithm with more sophisticated weighting
 export const calculateCareerMatches = (results: AssessmentResult): CareerSuggestion[] => {
   const maxPossibleScore = 5; // Max score on our 1-5 scale
   
-  // Calculate weighted trait importance for each career
-  const calculatedSuggestions = careerSuggestions.map(suggestion => {
-    // Give more weight to the primary traits needed for each career
-    const primaryTrait = suggestion.traits[0];
-    const secondaryTraits = suggestion.traits.slice(1);
+  // Create a normalized copy of the results (scale each trait to a 0-1 range)
+  const normalizedResults: Record<string, number> = {};
+  Object.entries(results).forEach(([trait, score]) => {
+    normalizedResults[trait] = score / 5; // Normalize to 0-1 scale since our scale is 1-5
+  });
+  
+  const calculatedSuggestions = careerSuggestions.map(career => {
+    let totalScore = 0;
+    let maxPossibleScore = 0;
     
-    // Primary trait gets 50% of the weight, remaining traits split the other 50%
-    const primaryWeight = 0.5;
-    const secondaryWeight = secondaryTraits.length > 0 ? 0.5 / secondaryTraits.length : 0;
+    // Calculate weighted trait matching
+    // Primary trait (first in array) gets 60% weight
+    // Secondary traits share remaining 40% equally
+    const primaryTrait = career.traits[0];
+    const secondaryTraits = career.traits.slice(1);
     
-    // Calculate weighted score
-    let score = 0;
-    score += (results[primaryTrait] / maxPossibleScore) * primaryWeight;
+    // Primary trait (60% weight)
+    if (normalizedResults[primaryTrait]) {
+      totalScore += normalizedResults[primaryTrait] * 0.6;
+      maxPossibleScore += 0.6;
+    }
     
-    secondaryTraits.forEach(trait => {
-      score += (results[trait] / maxPossibleScore) * secondaryWeight;
-    });
+    // Secondary traits (40% weight divided equally)
+    if (secondaryTraits.length > 0) {
+      const secondaryWeight = 0.4 / secondaryTraits.length;
+      secondaryTraits.forEach(trait => {
+        if (normalizedResults[trait]) {
+          totalScore += normalizedResults[trait] * secondaryWeight;
+          maxPossibleScore += secondaryWeight;
+        }
+      });
+    }
     
-    // Convert to percentage and round to integer
-    const percentageScore = Math.round(score * 100);
+    // Convert to percentage and ensure we don't divide by zero
+    let percentageScore = 0;
+    if (maxPossibleScore > 0) {
+      percentageScore = (totalScore / maxPossibleScore);
+    }
     
-    // Return a new object with the calculated score
+    // Round to the nearest whole percentage
+    const finalScore = Math.min(1, percentageScore); // Cap at 100%
+    
     return {
-      ...suggestion,
-      score: percentageScore
+      ...career,
+      score: finalScore
     };
   });
   
@@ -805,15 +829,170 @@ export const calculateCareerMatches = (results: AssessmentResult): CareerSuggest
   return calculatedSuggestions.sort((a, b) => b.score - a.score);
 };
 
-// Add the missing exported functions
 export const getTopTraits = (results: AssessmentResult, count: number = 3): TraitCategory[] => {
-  const sortedTraits = Object.entries(results)
+  // Filter out traits with low scores (below 2.5) as they're not significant strengths
+  const significantTraits = Object.entries(results)
+    .filter(([, value]) => value >= 2.5)
     .sort(([, valueA], [, valueB]) => valueB - valueA)
     .map(([trait]) => trait as TraitCategory);
-    
-  return sortedTraits.slice(0, count);
+  
+  // If we don't have enough significant traits, fall back to the top scores regardless
+  if (significantTraits.length < count) {
+    return Object.entries(results)
+      .sort(([, valueA], [, valueB]) => valueB - valueA)
+      .map(([trait]) => trait as TraitCategory)
+      .slice(0, count);
+  }
+  
+  return significantTraits.slice(0, count);
 };
 
 export const getTotalCareerCount = (): number => {
   return careerSuggestions.length;
 };
+
+export const careerCategories = [
+  {
+    name: "Technology & Digital",
+    description: "Careers focused on digital technologies, software development, and IT infrastructure",
+    careers: careerSuggestions.filter(career => 
+      career.traits.includes("TechAptitude") || 
+      career.title.includes("Developer") || 
+      career.title.includes("Engineer") ||
+      career.title.toLowerCase().includes("tech") ||
+      career.title.includes("Data") ||
+      career.title.includes("Digital") ||
+      career.title.includes("Cloud") ||
+      career.title.includes("Cyber")
+    )
+  },
+  {
+    name: "Healthcare & Biotechnology",
+    description: "Careers in medical services, healthcare administration, biotechnology, and medical research",
+    careers: careerSuggestions.filter(career => 
+      career.title.includes("Healthcare") ||
+      career.title.includes("Medical") ||
+      career.title.includes("Health") ||
+      career.title.includes("Bio") ||
+      career.title.includes("Clinical") ||
+      career.title.includes("Pharma") ||
+      career.description.toLowerCase().includes("healthcare") ||
+      career.description.toLowerCase().includes("medical") ||
+      career.description.toLowerCase().includes("health")
+    )
+  },
+  {
+    name: "Creative & Design",
+    description: "Careers involving artistic expression, design, media production, and creative problem-solving",
+    careers: careerSuggestions.filter(career => 
+      career.traits.includes("Creative") ||
+      career.title.includes("Design") ||
+      career.title.includes("Creative") ||
+      career.title.includes("Content") ||
+      career.title.includes("Art") ||
+      career.title.includes("Media") ||
+      career.title.includes("UX") ||
+      career.title.includes("UI")
+    )
+  },
+  {
+    name: "Business & Leadership",
+    description: "Careers in business management, entrepreneurship, consulting, and organizational leadership",
+    careers: careerSuggestions.filter(career => 
+      career.traits.includes("Leadership") ||
+      career.title.includes("Manager") ||
+      career.title.includes("Director") ||
+      career.title.includes("Officer") ||
+      career.title.includes("Chief") ||
+      career.title.includes("Business") ||
+      career.title.includes("Executive") ||
+      career.title.includes("Consultant")
+    )
+  },
+  {
+    name: "Science & Research",
+    description: "Careers focused on scientific research, analysis, and application across various disciplines",
+    careers: careerSuggestions.filter(career => 
+      career.traits.includes("Analytical") ||
+      career.title.includes("Scientist") ||
+      career.title.includes("Researcher") ||
+      career.title.includes("Analyst") ||
+      career.title.includes("Research") ||
+      career.description.toLowerCase().includes("research") ||
+      career.description.toLowerCase().includes("scientific") ||
+      career.description.toLowerCase().includes("laboratory")
+    )
+  },
+  {
+    name: "Environment & Sustainability",
+    description: "Careers focused on environmental conservation, renewable energy, and sustainable development",
+    careers: careerSuggestions.filter(career => 
+      career.title.includes("Environmental") ||
+      career.title.includes("Sustainable") ||
+      career.title.includes("Renewable") ||
+      career.title.includes("Green") ||
+      career.title.includes("Conservation") ||
+      career.description.toLowerCase().includes("environment") ||
+      career.description.toLowerCase().includes("sustainable") ||
+      career.description.toLowerCase().includes("renewable")
+    )
+  },
+  {
+    name: "Finance & Analytics",
+    description: "Careers in financial services, data analysis, risk management, and investment",
+    careers: careerSuggestions.filter(career => 
+      career.title.includes("Financial") ||
+      career.title.includes("Finance") ||
+      career.title.includes("Analyst") ||
+      career.title.includes("Investment") ||
+      career.title.includes("Banking") ||
+      career.description.toLowerCase().includes("financial") ||
+      career.description.toLowerCase().includes("finance") ||
+      career.traits.includes("Analytical") && 
+      (career.description.toLowerCase().includes("data") || 
+       career.description.toLowerCase().includes("analytics"))
+    )
+  },
+  {
+    name: "Education & Training",
+    description: "Careers focused on teaching, training, coaching, and educational development",
+    careers: careerSuggestions.filter(career => 
+      career.title.includes("Education") ||
+      career.title.includes("Teacher") ||
+      career.title.includes("Trainer") ||
+      career.title.includes("Coach") ||
+      career.title.includes("Learning") ||
+      career.title.includes("EdTech") ||
+      career.traits.includes("Helpful") && 
+      career.description.toLowerCase().includes("education")
+    )
+  }
+];
+
+export const ensureCategorization = () => {
+  // Get all categorized career titles
+  const categorizedTitles = new Set<string>();
+  careerCategories.forEach(category => {
+    category.careers.forEach(career => {
+      categorizedTitles.add(career.title);
+    });
+  });
+  
+  // Find uncategorized careers
+  const uncategorizedCareers = careerSuggestions.filter(
+    career => !categorizedTitles.has(career.title)
+  );
+  
+  // Add an "Other Emerging Careers" category if needed
+  if (uncategorizedCareers.length > 0) {
+    careerCategories.push({
+      name: "Other Emerging Careers",
+      description: "Other innovative and emerging career paths across various industries",
+      careers: uncategorizedCareers
+    });
+  }
+  
+  return careerCategories;
+};
+
+ensureCategorization();

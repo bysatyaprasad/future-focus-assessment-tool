@@ -21,29 +21,37 @@ import {
   GraduationCap,
   ListChecks,
   Info,
-  BookOpen
+  BookOpen,
+  Library
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Results = () => {
-  const { calculateResults, getCareerMatches, getTopTraits, getTotalCareerCount, goToStart } = useAssessment();
+  const { 
+    calculateResults, 
+    getCareerMatches, 
+    getTopTraits, 
+    getTotalCareerCount, 
+    goToStart, 
+    setCurrentView 
+  } = useAssessment();
   const [activeTab, setActiveTab] = useState("traits");
   
   // Persist results in localStorage to handle page refreshes
   useEffect(() => {
     // Save the current view as "results" in localStorage
     localStorage.setItem("currentView", "results");
-    
-    // This effect runs once when the Results component mounts
-    return () => {
-      // Cleanup is not needed as we want to persist the state
-    };
   }, []);
 
   const results = calculateResults();
   const careerMatches = getCareerMatches();
   const topTraits = getTopTraits();
   const totalCareers = getTotalCareerCount();
+
+  // Format score as percentage for display
+  const formatScoreAsPercentage = (score: number) => {
+    return Math.round(score * 100);
+  };
 
   return (
     <AssessmentLayout>
@@ -54,14 +62,18 @@ const Results = () => {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Career Compass Results!</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Future Skills School Results!</h2>
           <p className="text-gray-600 mb-2">
             Based on your answers, we've identified your top traits and career matches
           </p>
-          <div className="text-sm text-app-purple mb-6">
-            <Link to="/counselor-guide" className="inline-flex items-center gap-1 hover:underline">
+          <div className="flex justify-center gap-4 text-sm">
+            <Link to="/counselor-guide" className="inline-flex items-center gap-1 hover:underline text-app-purple">
               <BookOpen className="h-3.5 w-3.5" />
               Career Counselor Guide
+            </Link>
+            <Link to="/career-library" className="inline-flex items-center gap-1 hover:underline text-app-purple">
+              <Library className="h-3.5 w-3.5" />
+              Career Library
             </Link>
           </div>
         </motion.div>
@@ -127,7 +139,7 @@ const Results = () => {
             <div className="bg-gray-50 p-4 rounded-xl mb-4 flex items-center gap-2">
               <Info className="h-5 w-5 text-blue-500" />
               <p className="text-sm text-gray-700">
-                Showing your top {careerMatches.slice(0, 10).length} matches from our database of {totalCareers} future-ready careers
+                Showing your top {careerMatches.slice(0, 10).length} matches from our database of {totalCareers} future-ready careers. Explore all careers in the <Link to="/career-library" className="text-app-purple hover:underline">Career Library</Link>
               </p>
             </div>
             
@@ -155,7 +167,7 @@ const Results = () => {
                       <div className="text-right">
                         <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-app-green">
                           <span className="font-bold text-gray-800">
-                            {Math.round(career.score * 100)}%
+                            {formatScoreAsPercentage(career.score)}%
                           </span>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">Match</p>
@@ -244,10 +256,10 @@ const Results = () => {
               transition={{ duration: 0.6 }}
               className="bg-gradient-to-br from-app-purple-light/30 to-white p-6 rounded-xl"
             >
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Building Your Future-Ready Career</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Building Your Future-Proof Career</h3>
               <p className="text-gray-700 mb-6">
-                No matter which career path you choose, here are some strategies to help you build a successful,
-                high-income career that will remain relevant and in-demand in the future.
+                No matter which path you choose, these strategies will help you build a successful,
+                high-income career that remains relevant and in-demand over time.
               </p>
               
               <div className="space-y-6">
@@ -287,12 +299,12 @@ const Results = () => {
           </Button>
           
           <Button 
-            onClick={goToStart}
+            onClick={() => setCurrentView("library")}
             variant="outline"
             className="flex items-center gap-1"
           >
-            <Home className="w-4 h-4" />
-            Home
+            <Library className="w-4 h-4" />
+            Career Library
           </Button>
         </div>
       </div>
