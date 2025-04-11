@@ -1,3 +1,4 @@
+
 import { AssessmentSection, Question, TraitCategory, CareerSuggestion, AssessmentResult } from "@/types/assessment";
 import { additionalCareers } from "./additionalCareers";
 
@@ -776,4 +777,30 @@ export const calculateCareerMatches = (results: AssessmentResult): CareerSuggest
   const calculatedSuggestions = careerSuggestions.map(suggestion => {
     // Give more weight to the primary traits needed for each career
     const primaryTrait = suggestion.traits[0];
-    const secondaryTraits = suggestion.traits.slice(
+    const secondaryTraits = suggestion.traits.slice(1);
+    
+    // Primary trait gets 50% of the weight, remaining traits split the other 50%
+    const primaryWeight = 0.5;
+    const secondaryWeight = secondaryTraits.length > 0 ? 0.5 / secondaryTraits.length : 0;
+    
+    // Calculate weighted score
+    let score = 0;
+    score += (results[primaryTrait] / maxPossibleScore) * primaryWeight;
+    
+    secondaryTraits.forEach(trait => {
+      score += (results[trait] / maxPossibleScore) * secondaryWeight;
+    });
+    
+    // Convert to percentage and round to integer
+    const percentageScore = Math.round(score * 100);
+    
+    // Return a new object with the calculated score
+    return {
+      ...suggestion,
+      score: percentageScore
+    };
+  });
+  
+  // Sort by score descending
+  return calculatedSuggestions.sort((a, b) => b.score - a.score);
+};

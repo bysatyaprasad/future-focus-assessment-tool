@@ -68,7 +68,7 @@ const Welcome = () => {
               <p className="text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
                 Discover your perfect career path with our AI-powered assessment that matches your unique personality traits to 100+ high-income, future-ready careers
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
