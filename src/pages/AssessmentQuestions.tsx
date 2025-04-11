@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useAssessment } from "@/context/AssessmentContext";
 import AssessmentLayout from "@/components/AssessmentLayout";
 import QuestionCard from "@/components/QuestionCard";
-import { ChevronLeft, ChevronRight, Flag } from "lucide-react";
+import { ChevronLeft, ChevronRight, Flag, Home } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AssessmentQuestions = () => {
   const { 
@@ -79,15 +80,28 @@ const AssessmentQuestions = () => {
         />
 
         <div className="flex justify-between mt-8">
-          <Button
-            onClick={prevQuestion}
-            variant="outline"
-            disabled={isFirstQuestion()}
-            className="flex items-center gap-1"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            Back
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={prevQuestion}
+              variant="outline"
+              disabled={isFirstQuestion()}
+              className="flex items-center gap-1"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Back
+            </Button>
+            
+            <Link to="/welcome">
+              <Button
+                variant="ghost"
+                className="flex items-center gap-1 text-gray-500"
+                title="Return to home page"
+              >
+                <Home className="h-4 w-4" />
+                <span className="sr-only md:not-sr-only">Home</span>
+              </Button>
+            </Link>
+          </div>
           
           <Button
             onClick={handleNext}

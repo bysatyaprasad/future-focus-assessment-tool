@@ -48,25 +48,25 @@ const QuestionCard = ({ question, onAnswer, selectedValue }: QuestionCardProps) 
               onClick={() => onAnswer(option.value)}
               variant="outline"
               className={cn(
-                "w-full py-4 text-left justify-start text-base border rounded-xl transition-all",
+                "w-full py-6 text-left justify-start text-base border rounded-xl transition-all",
                 selectedValue === option.value
                   ? "bg-app-purple text-white border-app-purple"
                   : "hover:border-app-purple/50 hover:bg-app-purple/5"
               )}
             >
-              <div className="flex items-center">
+              <div className="flex items-center w-full">
                 <div className={cn(
-                  "flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold",
+                  "flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold shrink-0",
                   selectedValue === option.value 
                     ? "bg-white text-app-purple" 
                     : "bg-app-purple/10 text-app-purple"
                 )}>
                   {option.value}
                 </div>
-                <div>
+                <div className="w-full">
                   <div className="font-medium">{option.label}</div>
                   <div className={cn(
-                    "text-xs mt-1",
+                    "text-xs mt-1 line-clamp-2",
                     selectedValue === option.value ? "text-white/80" : "text-gray-500"
                   )}>
                     {option.description}

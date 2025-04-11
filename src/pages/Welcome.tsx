@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useAssessment } from "@/context/AssessmentContext";
-import AssessmentLayout from "@/components/AssessmentLayout";
 import { ArrowRight, Sparkles, Map, Compass, Lightbulb, Star, TrendingUp, Rocket, Library } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -131,9 +130,9 @@ const Welcome = () => {
               <div className="flex justify-center mb-4">
                 <Lightbulb className="text-amber-500 h-10 w-10" />
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Actionable Insights</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Advanced AI Matching</h3>
               <p className="text-gray-600">
-                Get practical steps to pursue your ideal career path
+                Sophisticated algorithm that delivers personalized, accurate recommendations
               </p>
             </motion.div>
           </motion.div>
