@@ -66,7 +66,7 @@ const QuestionCard = ({ question, onAnswer, selectedValue }: QuestionCardProps) 
                 <div className="w-full">
                   <div className="font-medium">{option.label}</div>
                   <div className={cn(
-                    "text-xs mt-1 line-clamp-2",
+                    "text-sm mt-1",
                     selectedValue === option.value ? "text-white/80" : "text-gray-500"
                   )}>
                     {option.description}

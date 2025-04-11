@@ -29,6 +29,9 @@ const Index = () => {
         case "results":
           navigate("/results");
           break;
+        case "library":
+          navigate("/career-library");
+          break;
         default:
           navigate("/welcome");
       }

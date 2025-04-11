@@ -49,7 +49,7 @@ const AssessmentQuestions = () => {
     }
   };
 
-  const isAnswered = currentQuestion.id in answers;
+  const isAnswered = currentQuestion && currentQuestion.id in answers;
 
   return (
     <AssessmentLayout progress={getTotalProgress()}>
