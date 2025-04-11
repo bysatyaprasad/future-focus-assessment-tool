@@ -1,13 +1,18 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useAssessment } from "@/context/AssessmentContext";
 import { ArrowRight, Sparkles, Map, Compass, Lightbulb, Star, TrendingUp, Rocket, Library } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Welcome = () => {
   const { setCurrentView } = useAssessment();
+  const navigate = useNavigate();
+
+  const handleStartAssessment = () => {
+    setCurrentView("assessment");
+    navigate("/assessment");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-app-purple/10 via-white to-app-blue/20 py-8">
@@ -150,7 +155,7 @@ const Welcome = () => {
             </div>
 
             <Button 
-              onClick={() => setCurrentView("assessment")} 
+              onClick={handleStartAssessment} 
               className="bg-gradient-to-r from-app-purple to-app-purple-dark hover:from-app-purple-dark hover:to-app-purple text-white px-8 py-7 text-xl rounded-full shadow-lg hover:shadow-xl transition-all group"
             >
               Discover Your Ideal Career Path
