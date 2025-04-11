@@ -9,6 +9,12 @@ import AssessmentLayout from "@/components/AssessmentLayout";
 import { Search, BookOpen, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CareerSuggestion, TraitCategory } from "@/types/assessment";
+import { additionalCareers } from "@/data/additionalCareers";
+
+// Define an interface that extends CareerSuggestion with the category property
+interface CareerWithCategory extends CareerSuggestion {
+  category: string;
+}
 
 const CareerLibrary = () => {
   const { getCareerCategories } = useAssessment();
@@ -16,7 +22,7 @@ const CareerLibrary = () => {
   
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [filteredCareers, setFilteredCareers] = useState<CareerSuggestion[]>([]);
+  const [filteredCareers, setFilteredCareers] = useState<CareerWithCategory[]>([]);
   
   // Get all careers from all categories
   useEffect(() => {
@@ -55,11 +61,12 @@ const CareerLibrary = () => {
   }, [searchQuery, selectedCategory, careerCategories]);
 
   return (
-    <AssessmentLayout customClass="max-w-4xl">
+    <AssessmentLayout>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto"
       >
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -135,7 +142,7 @@ const CareerLibrary = () => {
 };
 
 // Career card component
-const CareerCard = ({ career }: { career: CareerSuggestion & { category: string } }) => {
+const CareerCard = ({ career }: { career: CareerWithCategory }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
