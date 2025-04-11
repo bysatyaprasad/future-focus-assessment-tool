@@ -804,3 +804,16 @@ export const calculateCareerMatches = (results: AssessmentResult): CareerSuggest
   // Sort by score descending
   return calculatedSuggestions.sort((a, b) => b.score - a.score);
 };
+
+// Add the missing exported functions
+export const getTopTraits = (results: AssessmentResult, count: number = 3): TraitCategory[] => {
+  const sortedTraits = Object.entries(results)
+    .sort(([, valueA], [, valueB]) => valueB - valueA)
+    .map(([trait]) => trait as TraitCategory);
+    
+  return sortedTraits.slice(0, count);
+};
+
+export const getTotalCareerCount = (): number => {
+  return careerSuggestions.length;
+};
