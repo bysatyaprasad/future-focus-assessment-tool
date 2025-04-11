@@ -299,12 +299,14 @@ const Results = () => {
           </Button>
           
           <Button 
-            onClick={() => setCurrentView("library")}
+            asChild
             variant="outline"
             className="flex items-center gap-1"
           >
-            <Library className="w-4 h-4" />
-            Career Library
+            <Link to="/career-library">
+              <Library className="w-4 h-4" />
+              Career Library
+            </Link>
           </Button>
         </div>
       </div>

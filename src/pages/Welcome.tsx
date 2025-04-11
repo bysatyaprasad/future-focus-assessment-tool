@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useAssessment } from "@/context/AssessmentContext";
 import AssessmentLayout from "@/components/AssessmentLayout";
-import { ArrowRight, Sparkles, Map, Compass, Lightbulb, Star, TrendingUp, Rocket } from "lucide-react";
+import { ArrowRight, Sparkles, Map, Compass, Lightbulb, Star, TrendingUp, Rocket, Library } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Welcome = () => {
@@ -28,7 +28,11 @@ const Welcome = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex items-center gap-4"
           >
+            <Link to="/career-library" className="text-sm text-gray-600 hover:text-app-purple">
+              Career Library
+            </Link>
             <Link to="/counselor-guide" className="text-sm text-gray-600 hover:text-app-purple">
               Counselor Guide
             </Link>
@@ -66,9 +70,9 @@ const Welcome = () => {
                 Future Focus
               </h1>
               <p className="text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
-                Discover your perfect career path with our AI-powered assessment that matches your unique personality traits to 100+ high-income, future-ready careers
+                Discover your perfect career path with our AI-powered assessment that matches your unique personality traits to high-income, future-ready careers
               </p>
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -99,7 +103,7 @@ const Welcome = () => {
               <div className="flex justify-center mb-4">
                 <TrendingUp className="text-emerald-600 h-10 w-10" />
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">100+ Future Careers</h3>
+              <h3 className="font-bold text-gray-800 mb-2">Future-Ready Careers</h3>
               <p className="text-gray-600">
                 Discover high-income paths aligned with emerging opportunities
               </p>
@@ -154,9 +158,15 @@ const Welcome = () => {
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
 
-            <p className="mt-6 text-sm text-gray-500">
-              Join over 10,000 students who've found their career direction
-            </p>
+            <div className="mt-6 flex justify-center gap-4 items-center">
+              <Link to="/career-library" className="text-sm text-app-purple hover:underline flex items-center gap-1">
+                <Library className="h-4 w-4" />
+                Browse Career Library
+              </Link>
+              <span className="text-sm text-gray-500">
+                Join over 10,000 students who've found their direction
+              </span>
+            </div>
           </motion.div>
         </div>
       </div>
